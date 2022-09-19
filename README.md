@@ -1,11 +1,12 @@
 # Laporan Proyek Machine Learning - Ades Tikaningsih
  
 
-### Domain Proyek : Implementasi Hyperparameter Tuning Algoritma K-Nearest Neighborh untuk Prediksi Tanaman 
+## Domain Proyek
 
 **Latar Belakang**
 
-Pertanian merupakan salah satu sektor industri yang menjadi bagian pekerjaan juga pemenuhan kebutuhan masyarakat seperti kebutuhan makanan pokok. Salah satu hal penting dalam bidang pertanian adalah memilih jenis tanaman dengan mempertimbangkan beberapa faktor  seperti sifat tanah, kondisi iklim dan jenis pupuk yang digunakan, sering kali kita menghadapi perubahan iklim yang tidak terduga seperti curah hujan non-musim, gelombang panas atau fluktuasi tingkat kelembaban. Sebagai petani harus bisa mengelola dan menentukan skala yang ideal untuk pertumbuhan dan berkembangnya tanaman sehingga kerugian dapat diminimalisir. Oleh karena itu, perlu upaya untuk membantu petani dalam mengidentifikasi karakteristik tanaman sesuai dengan kondisi tanah, suhu, curah hujan dan pupuk NPK yaitu dengan memanfaatkan perkembangan teknologi khususnya bidang pertanian dibuatlah inovasi dari teknologi machine learning yaitu memprediksi kriteria tanaman terbaik agar dapat dapat membantu petani agar dapat menanam tanaman sesuai dengan karakteristik dan kondisi lingkungan. 
+Pertanian merupakan salah satu sektor industri yang menjadi bagian pekerjaan juga pemenuhan kebutuhan  kebutuhan makanan pokok bagi masyarakat. Salah satu hal penting dalam bidang pertanian adalah memilih jenis tanaman dengan mempertimbangkan faktor cuaca, suhu, tanah dan jenis pupuk yang digunakan. Sering kali kita menghadapi perubahan iklim yang tidak terduga seperti curah hujan non-musim, gelombang panas atau fluktuasi tingkat kelembaban. Sebagai petani harus bisa mengelola dan menentukan skala yang ideal untuk pertumbuhan dan berkembang tanaman sehingga kerugian dapat diminimalisir. Petani dapat menghasilkan tanaman sepanjang tahun dan kesuburan tanah tetap terjaga dengan memperhatikan kualitas tanah yang ditentukan oleh nilai NPK dari tanah. 'N' adalah kandungan nitrogen tanah, 'P' adalah kandungan fosfor dan 'K' adalah kandungan kalium dari tanah.[[1](https://www.researchgate.net/profile/Hem-Joshi-3/post/what_are_the_different_techniques_used_in_fertilizers_crop_recommendation_system/attachment/5f08a4a43f16f90001231756/AS%3A911802045038593%401594401956134/download/ijcsit2016070247.pdf)]. Oleh karena itu, perlu upaya untuk membantu petani dalam mengidentifikasi karakteristik tanaman sesuai dengan kondisi tanah, suhu, curah hujan dan pupuk NPK yaitu dengan memanfaatkan perkembangan teknologi khususnya bidang pertanian dibuatlah inovasi dari teknologi machine learning yaitu memprediksi kriteria tanaman terbaik agar dapat dapat membantu petani dalam menanam tanaman sesuai dengan karakteristik dan kondisi lingkungan.
+
 ## Business Understanding
 
 Petani ialah orang yang pekerjaannya bercocok tanam. Banyak keahlian yang dituntut untuk dimiliki oleh seorang petani, salah satunya mengidentifikasi pengelolaan tanah, kondisi cuaca, suhu dan pupuk. Upaya itu dilakukan agar petani mengetahui tanaman yang cocok sesuai karakteristiknya. Contoh sebagian besar tanaman padi membutuhkan air dalam jumlah besar, tetapi ada beberapa tanaman yang membutuhkan sedikit air. Pemberian air yang terlalu sedikit akan menyebabkan daun terkulai, dan terlalu banyak air akan menyebabkan akar membusuk. Oleh karena itu, di perlukan suatu metode untuk memprediksi tanaman terbaik dengan mempertimbangkan beberapa faktor.
@@ -21,9 +22,9 @@ Berdasarkan kondisi yang telah diuraikan sebelumnya, proyek ini akan mengembangk
 *	Ph tanah berfungsi dalam jumlah tertentu untuk tumbuh, berkembang, dan bertahan terhadap penyakit
 *	Curah hujan dapat membantu tumbuhan dalam bertumbuh dengan bantuan air.
 
-Dengan menggunakan teknologi machine learning algoritma K-Nearest Neighborh diharapkan dapat menjawab permasalahan berikut :
+Dengan menggunakan teknologi machine learning algoritma K-Nearest Neighbor dan hyperparameter tuning diharapkan dapat menjawab permasalahan berikut :
 - Bagaimana menentukkan tanaman yang cocok sesuai dengan kondisi curah hujan, pH tanah, suhu, kelembabn dan pupuk NPK ?
-- Bagaimana menentukkan nilai 'k' terbaik pada algoritma K-Nearest Neighbor.
+- Bagaimana menentukkan nilai 'k' terbaik pada algoritma K-Nearest Neighbor menggunakan teknik hyperparameter tuning.
 
 **Goal**
 
@@ -33,7 +34,7 @@ Untuk  menjawab problem statement tersebut, akan membuat predictive modelling de
 
 **Solution Statement**
 
-Untuk mencapai goals tersebut, proyek ini menggunakan salah satu algoritma Machine Learning yaitu K-Nearest Neighborh. Konsep dasar dari KNN adalah melihat berapa banyak ‘tetangga’ yang paling dekat dengan data baru yang hendak diprediksi datanya. K pada nama KNN disini menunjukan ‘tetangga’ maksimal untuk menentukan dikategori mana data baru ini akan terprediksi untuk memperoleh hasil akurasi yang maksimal, kita tentukan K sementara terlebih dahulu. Karena setelah ini akan dilakukan proses optimalisasi model dengan memilih parameter terbaik (hyperparameter tuning) sehingga K ini bersifat sementara. Setelah itu akan dibuat perbandingan berdasarkan nilai akurasi yang dihasilkan sebelum dan sesudah menggunakan hyperparameter tuning. Hasil akurasi  terbaiklah yang digunakan untuk memprediksi.
+Untuk mencapai goals tersebut, proyek ini menggunakan salah satu algoritma Machine Learning yaitu K-Nearest Neighborh. Konsep dasar dari KNN adalah melihat berapa banyak ‘tetangga’ yang paling dekat dengan data baru yang hendak diprediksi datanya. K pada nama KNN disini menunjukan ‘tetangga’ maksimal untuk menentukan dikategori mana data baru ini akan terprediksi untuk memperoleh hasil akurasi yang maksimal, kita tentukan K sementara terlebih dahulu. Karena setelah ini akan dilakukan proses optimalisasi model dengan memilih parameter terbaik (hyperparameter tuning) sehingga K ini bersifat sementara. Setelah itu akan dibuat perbandingan berdasarkan nilai akurasi yang dihasilkan sebelum dan sesudah menggunakan hyperparameter tuning. Hasil akurasi terbaiklah yang digunakan untuk memprediksi.
 
 ## Data Understanding
 
@@ -105,15 +106,11 @@ The Shape of x test: (354, 7)
 The Shape of y train: (1414,)
 The Shape of y test: (354,)
 ```
-###### 3. Standarisasi
-Proses standarisasi menggunakan fungsi StandardScaler. Fungsi StandardScaler() akan menormalkan fitur-fitur (setiap kolom X) sehingga setiap kolom/variabel akan memiliki mean = 0 dan standard deviation = 1.
-
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/standarscaler.png)
-
-Sampai di tahap ini, data kita telah siap untuk dilatih menggunakan model machine learning
 ## Modeling
 Untuk menyelesaikan proyek ini menggunakan Algoritma K-nearest Neighbor dengan menentukan nilai 'k' terbaik menggunakan hyperparameter tuning.Pengukuran performa model didasarkan pada akurasinya. Berikut tahapan membuat model dengan KNN :
+
 **1. Konsep Dasar K Nearest Neighbor**
+
 Algoritma KNN menggunakan ‘kesamaan fitur’ untuk memprediksi nilai dari setiap data yang baru. Dengan kata lain, setiap data baru diberi nilai berdasarkan seberapa mirip titik tersebut dalam set pelatihan. KNN bekerja dengan membandingkan jarak satu sampel ke sampel pelatihan lain dengan memilih sejumlah k tetangga terdekat (dengan k adalah sebuah angka positif). 
 **2. Menentukkan k terbaik (sementara)**
 Untuk memperoleh hasil akurasi yang maksimal, tentukan K sementara terlebih dahulu. K inisialisasi ini akan menjadi K pada model awal sebelum optimalisasi (tuning) yang nantinya akan dibandingkan nilai performanya dengan model setelah tuning.Pada proyek ini menggunakan nilai k dengan range 1 sampai 50 interval 2 
