@@ -58,7 +58,7 @@ Supaya isi dataset lebih mudah dipahami, kita perlu melakukan proses loading dat
 ###### Informasi Dataset
 mengecek informasi pada dataset dengan fungsi info() berikut. 
 
-![gambar](https://github.com/adstika20/submission_predictive_analytics/blob/main/data.info().png)
+![image](https://user-images.githubusercontent.com/110407053/191157940-16f0c906-8600-470f-b877-6befa0769503.png)
 
 Berdasarkan informasi diatas dataset memiliki beberapa kriteria antara lain :
 *   4 Kolom dengan tipe float64 yaitu temperature, humidity, ph, rainfall
@@ -68,21 +68,22 @@ Berdasarkan informasi diatas dataset memiliki beberapa kriteria antara lain :
 ###### Cek Missing Value
 Jika data terdiri dari ratusan bahkan ribuan baris tentu akan susah dalam menemukan nilai field yang kosong. Oleh karena itu, Pandas memungkinkan kita dapat menemukan missing value secara cepat dengan fungsi isna() dan sum().
 
-![missing value](https://github.com/adstika20/submission_predictive_analytics/blob/main/missing%20value.png)
+![image](https://user-images.githubusercontent.com/110407053/191158093-4d3f3239-79e4-448e-8d8f-6156a2dce413.png)
 
 Pada dataset crop recommendation tidak ada missing value, sehingga bisa dilanjutkan untuk proses berikutnya.
 ###### Menangani Outlier
 Beberapa pengamatan dalam satu set data kadang berada di luar lingkungan pengamatan lainnya. Pengamatan seperti itu disebut outlier. Dampak jika tidak menanggulangi nilai outliers akan menyebabkan ketidakakuratan model machine learning yang dikerjakan. Berikut visualisasi beberapa data outlier 
 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/Outlier.png)
+![image](https://user-images.githubusercontent.com/110407053/191158147-78fa4ece-1b93-4c99-aabf-b6b3e1f82162.png)
 
 Untuk mengatasi outlier menggunakan metode IQR dengan mengidentifikasi outlier yang berada di luar Q1 dan Q3. Nilai apa pun yang berada di luar batas ini dianggap sebagai outlier. Hal pertama yang perlu Anda lakukan adalah membuat batas bawah dan batas atas. Untuk membuat batas bawah, kurangi Q1 dengan 1,5 * IQR. Kemudian, untuk membuat batas atas, tambahkan 1.5 * IQR dengan Q3. Setelah menghilangkan outliers cek kembali data. Data telah bersih dan memiliki 1768 sampel.
 ###### Bivariate Analysis
 Bivariate Analysis dilakukan untuk menemukan hubungan antara setiap variabel dalam kumpulan data dan variabel target yang diinginkan (atau) menggunakan 2 variabel dan menemukan hubungan di antara keduanya.
 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/bivariate%20analysis.png) 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/bivariate1.png)
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/bivariate2.png)
+![image](https://user-images.githubusercontent.com/110407053/191158201-54920db9-9e53-4e14-abe0-6bbbc834a20f.png)
+![image](https://user-images.githubusercontent.com/110407053/191158230-6aaeffbe-c2b3-4772-8e1e-79062d4d2690.png)
+![image](https://user-images.githubusercontent.com/110407053/191158254-c8215e05-2369-4da0-93ba-3e3c3fc024df.png)
+
 
 Figure diatas dapat memberi tahu kita variabel kategori tersebut sangat sebagian besar seimbang, sehingga diagram korelasi di atas dapat disimpulkan sebagai berikut :
 *   Kapas,pisang,semangka,kopi,  membutuhkan sebagian besar Nitrogen
@@ -117,11 +118,12 @@ Algoritma KNN menggunakan ‘kesamaan fitur’ untuk memprediksi nilai dari seti
 
 Untuk memperoleh hasil akurasi yang maksimal, tentukan K sementara terlebih dahulu. K inisialisasi ini akan menjadi K pada model awal sebelum optimalisasi (tuning) yang nantinya akan dibandingkan nilai performanya dengan model setelah tuning berdasarkan akurasi yang diperoleh. Pada proyek ini menggunakan nilai k dengan range 1 sampai 50 interval 2 
 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/akurasi_sementara.png)
+![image](https://user-images.githubusercontent.com/110407053/191158303-37997fec-0753-4f25-bbf7-ad0e26c3fc25.png)
+
 
 Jika melihat output diatas, dapat disimpulkan bahwa K (sementara) yang terbaik adalah K = 49. Nilai akurasinya mencapai 91.24%.  Akurasi tersebut cukup bagus tetapi mari mengecek matrik selain nilai akurasi, seperti precision, recall, dan f1-score, dengan menerapkan fungsi classification_report dari library sklearn. Presisi idealnya harus bernilai 1 (tinggi) untuk pengklasifikasi yang baik, begitu juga dengan recall. Kemudian skor F1 menjadi 1 hanya jika presisi dan recall keduanya 1. Skor F1, presisi dan recall dan merupakan ukuran yang lebih baik daripada melihat nilai akurasi dalam menentukkan performa model.
 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/matriks_knn_before.png)
+![image](https://user-images.githubusercontent.com/110407053/191158354-583aa8c8-0092-4fab-9a44-802c23b7dae9.png)
 
 Berdasarkan gambar diatas hampir semua kelas, akurasi precision, recall, dan f1-score memiliki angka yang tinggi, rata-rata di atas 90-an. Namun, pada beberapa kelas seperti kelas dengan indeks 11 dan 18, akurasi rata-ratanya berada dibawah 50%. Hal ini bisa disebabkan oleh representasi fitur yang cukup kompleks dari kedua kelas ini. Oleh karena itu, mari kita menerapkan hyperparameter tuning untuk memperoleh hasil yang lebih baik.
 
@@ -147,7 +149,7 @@ Selanjutnya menentukkan kandidat untuk memilih parameter terbaik dengan ketentua
 
 Kemudian dengan menggunakan GridSearchCV Scikit-Learn untuk mencari parameter yang dilakukan secara brute force dan melaporkan mana parameter yang memiliki akurasi paling baik. Setelah dilakukan proses pencarian parameter yang optimal menggunakan GridSearch diperoleh parameter nilai 'k' adalah 13 , metric : manhattan dan weights : distance yang akan digunakan untuk melakukan fit model yang diperoleh hasil berikut :
 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/akursi_after_hyp.png)
+![image](https://user-images.githubusercontent.com/110407053/191158404-cab3fa91-58a6-4123-ac41-7b50011e83c9.png)
 
  Nilai akurasi model meningkat setelah diterapkan hyperparameter tuning dengan perolehan nilai train 100 % dan test 97 %. Tentunya performa model lebih baik jika dibandingkan dengan akurasi sebelum dilakukan tuning.
 
@@ -156,11 +158,11 @@ Seperti yang telah dijelaskan sebelumnya matrik evaluasi yang digunakan adalah a
 
 Jika melihat report dari model sebelum proses tuning, nilai akurasinya mencapai 91%. Meski akurasi yang dihasilkan adalah 91%, namun berdasarkan fungsi classification report() nilai precission, recall, dan f1-score recall pada beberapa kelas hanya sebesar 30% . Artinya prediksi pada kelas masih banyak kesalahan. Bandingkan dengan model setelah dilakukan optimalisasi dengan tuning. Selain akurasi yang didapatkan juga meningkat menjadi train 100 % dan test 97 %. Rata-rata Nilai terbaik F1-Score adalah 1.0 dan nilai terburuknya adalah 0.67. 
 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/matriks_knn.png)
+![image](https://user-images.githubusercontent.com/110407053/191158448-ad5910d7-ec1d-4d57-88ff-c104f94af935.png)
 
 Sehingga dapat disimpulkan dengan menggunakan hyperparameter tuning ini dapat meningkatkan nilai performa model yang digunakan. Meski begitu, kekurangan dari tuning ini adalah semakin banyak data dan semakin banyak parameter yang hendak diuji, maka semakin lama waktu proses yang dibutuhkan. 
 
-![](https://github.com/adstika20/submission_predictive_analytics/blob/main/prediksi.png)
+![image](https://user-images.githubusercontent.com/110407053/191158500-205e118f-4e69-41e3-a1ba-1288116dbd96.png)
 
 Dengan kondisi N = 83, P = 45, K = 60, temperature = 28 C, humidity = 70.3 %, ph = 7.0, dan rainfall = 150 mm tanaman yang cocok di adalah jute atau daun rami. Dengan menggunakan Hyperparameter Tuning untuk mencari nilai k pada algoritma k-nearest neighbor dan beberapa metrik lain dapat meningkatkan performa model dan dapat memprediksi tanaman sesuai dengan karakteristiknya.
 
