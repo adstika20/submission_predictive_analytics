@@ -112,17 +112,21 @@ Untuk menyelesaikan proyek ini menggunakan Algoritma K-nearest Neighbor dengan m
 **1. Konsep Dasar K Nearest Neighbor**
 
 Algoritma KNN menggunakan ‘kesamaan fitur’ untuk memprediksi nilai dari setiap data yang baru. Dengan kata lain, setiap data baru diberi nilai berdasarkan seberapa mirip titik tersebut dalam set pelatihan. KNN bekerja dengan membandingkan jarak satu sampel ke sampel pelatihan lain dengan memilih sejumlah k tetangga terdekat (dengan k adalah sebuah angka positif). 
+
 **2. Menentukkan k terbaik (sementara)**
-Untuk memperoleh hasil akurasi yang maksimal, tentukan K sementara terlebih dahulu. K inisialisasi ini akan menjadi K pada model awal sebelum optimalisasi (tuning) yang nantinya akan dibandingkan nilai performanya dengan model setelah tuning.Pada proyek ini menggunakan nilai k dengan range 1 sampai 50 interval 2 
-```sh
-1,3,5,7....49
-```
-Jika melihat output diatas, dapat disimpulkan bahwa K (sementara) yang terbaik adalah K = 49. Nilai akurasinya mencapai 91.24%.  Akurasi tersebut cukup bagus tetapi mari mengecek matrik selain nilai akurasi, seperti precision, recall, dan f1-score, dengan menerapkan fungsi classification_report dari library sklearn. Presisi idealnya harus bernilai 1 (tinggi) untuk pengklasifikasi yang baik, begitu juga dengan recall. Kemdudian Skor F1 menjadi 1 hanya jika presisi dan daya ingat keduanya 1. Skor F1 menjadi tinggi hanya jika presisi dan daya ingat tinggi. Skor F1, presisi dan recall dan merupakan ukuran yang lebih baik daripada melihat nilai akurasi dalam menentukkan performa model.
+
+Untuk memperoleh hasil akurasi yang maksimal, tentukan K sementara terlebih dahulu. K inisialisasi ini akan menjadi K pada model awal sebelum optimalisasi (tuning) yang nantinya akan dibandingkan nilai performanya dengan model setelah tuning berdasarkan akurasi yang diperoleh. Pada proyek ini menggunakan nilai k dengan range 1 sampai 50 interval 2 
+
+![](https://github.com/adstika20/submission_predictive_analytics/blob/main/akurasi_sementara.png)
+
+Jika melihat output diatas, dapat disimpulkan bahwa K (sementara) yang terbaik adalah K = 49. Nilai akurasinya mencapai 91.24%.  Akurasi tersebut cukup bagus tetapi mari mengecek matrik selain nilai akurasi, seperti precision, recall, dan f1-score, dengan menerapkan fungsi classification_report dari library sklearn. Presisi idealnya harus bernilai 1 (tinggi) untuk pengklasifikasi yang baik, begitu juga dengan recall. Kemudian skor F1 menjadi 1 hanya jika presisi dan recall keduanya 1. Skor F1, presisi dan recall dan merupakan ukuran yang lebih baik daripada melihat nilai akurasi dalam menentukkan performa model.
 
 ![](https://github.com/adstika20/submission_predictive_analytics/blob/main/matriks_knn_before.png)
 
-Berdasarkan gambar hampir semua kelas, akurasi precision, recall, dan f1-score memiliki angka yang tinggi, rata-rata di atas 90-an. Namun, pada beberapa kelas seperti kelas dengan indeks 11 dan 18, akurasi rata-ratanya berada dibawah 50%. Hal ini bisa disebabkan oleh representasi fitur yang cukup kompleks dari kedua kelas ini. Oleh karena itu, mari kita menerapkan hyperparameter tuning untuk memperoleh hasil yang lebih baik.
+Berdasarkan gambar diatas hampir semua kelas, akurasi precision, recall, dan f1-score memiliki angka yang tinggi, rata-rata di atas 90-an. Namun, pada beberapa kelas seperti kelas dengan indeks 11 dan 18, akurasi rata-ratanya berada dibawah 50%. Hal ini bisa disebabkan oleh representasi fitur yang cukup kompleks dari kedua kelas ini. Oleh karena itu, mari kita menerapkan hyperparameter tuning untuk memperoleh hasil yang lebih baik.
+
 **3. Hyperparameter Tuning**
+
 Hyperparameter tuning adalah sebuah proses untuk melakukan optimalisasi parameter pada sebuah model. Dalam KNN, terdapat beberapa parameter yang menjadi pembangun model. K atau dikenal dengan ‘n_neighbors’ merupakan salah satu parameter yang sudah dikenalkan diawal. Untuk proyek ini Parameter yang di gunakan ada 3 yaitu :
 *   n_neighbors : menentukan nilai k terbaik berdasarkan nilai yang telah dihitung
 *   Weight (bobot) : periksa penambahan bobot seragam atau jarak
@@ -136,25 +140,30 @@ array([0.98305085, 0.97175141, 0.97175141, 0.97740113, 0.97457627,
        0.97175141, 0.97175141, 0.95762712, 0.95762712, 0.95762712])
 ```
 Ini berarti bahwa ketika sampai pada kumpulan sampel independen lainnya (set pengujian), diharapkan dapat mencapai kisaran akurasi tersebut. 
+Selanjutnya menentukkan kandidat untuk memilih parameter terbaik dengan ketentuan berikut :
+* n_neighbors : 12,13,14,15,16,17,18
+* weights : 'uniform','distance'
+* metric : 'minkowski','euclidean','manhattan'
+
+Kemudian dengan menggunakan GridSearchCV Scikit-Learn untuk mencari parameter yang dilakukan secara brute force dan melaporkan mana parameter yang memiliki akurasi paling baik. Setelah dilakukan proses pencarian parameter yang optimal menggunakan GridSearch diperoleh parameter nilai 'k' adalah 13 , metric : manhattan dan weights : distance yang akan digunakan untuk melakukan fit model yang diperoleh hasil berikut :
+
+![](https://github.com/adstika20/submission_predictive_analytics/blob/main/akursi_after_hyp.png)
+
+ Nilai akurasi model meningkat setelah diterapkan hyperparameter tuning dengan perolehan nilai train 100 % dan test 97 %. Tentunya performa model lebih baik jika dibandingkan dengan akurasi sebelum dilakukan tuning.
+
+## Evaluation
+Seperti yang telah dijelaskan sebelumnya matrik evaluasi yang digunakan adalah akurasi, precision,recall dan F1 score. Dimana precision idealnya harus bernilai 1 (tinggi) untuk pengklasifikasi yang baik, begitu juga dengan recall. Kemudian skor F1 menjadi 1 hanya jika presisi dan recall keduanya 1. Skor F1, presisi dan recall dan merupakan ukuran yang lebih baik daripada melihat nilai akurasi dalam menentukkan performa model.
+
+Jika melihat report dari model sebelum proses tuning, nilai akurasinya mencapai 91%. Meski akurasi yang dihasilkan adalah 91%, namun berdasarkan fungsi classification report() nilai precission, recall, dan f1-score recall pada beberapa kelas hanya sebesar 30% . Artinya prediksi pada kelas masih banyak kesalahan. Bandingkan dengan model setelah dilakukan optimalisasi dengan tuning. Selain akurasi yang didapatkan juga meningkat menjadi train 100 % dan test 97 %. Rata-rata Nilai terbaik F1-Score adalah 1.0 dan nilai terburuknya adalah 0.67. 
 
 ![](https://github.com/adstika20/submission_predictive_analytics/blob/main/matriks_knn.png)
 
-Selanjutnya menentukkan kandidat untuk memilih parameter terbaik 
-```sh
-{ 'n_neighbors' : [12,13,14,15,16,17,18],
-               'weights' : ['uniform','distance'],
-               'metric' : ['minkowski','euclidean','manhattan']}
-```
-Kemudian dengan menggunakan GridSearchCV Scikit-Learn untuk mencari parameter terbaik yang dilakukan secara brute force dan melaporkan mana parameter yang memiliki akurasi paling baik.
-Output dibawah ini menjelaskan bahwa parameter terbaik untuk nilai 'k' adalah 13 , metric : manhattan dan weights : distance.
-Kemudian melakukan fit model dengan menerapkan nilai k terbaik sebelumnya yang diperoleh hasil berikut :
+Sehingga dapat disimpulkan dengan menggunakan hyperparameter tuning ini dapat meningkatkan nilai performa model yang digunakan. Meski begitu, kekurangan dari tuning ini adalah semakin banyak data dan semakin banyak parameter yang hendak diuji, maka semakin lama waktu proses yang dibutuhkan. 
 
+![](https://github.com/adstika20/submission_predictive_analytics/blob/main/prediksi.png)
 
-## Evaluation
-Bandingkan dengan model setelah dilakukan optimalisasi dengan tuning.Selain akurasi yang didapatkan juga meningkat menjadi 98%. Selain itu, berdasarkan klasifikasi report rata-rata Nilai terbaik F1-Score adalah 1.0 dan nilai terburuknya adalah 0.67. Secara representasi, setelah menggunakan hyperparameter metrik precision, recall, dan f1-score dominan menghasilkan akurasi terbaik 1.0. Sehingga dapat dikatakan bahwa dengan menggunakan hyperparameter tuning ini dapat meningkatkan nilai performa model yang digunakan. 
- gambar.....
-Dengan kondisi N = 83, P = 45, K = 60, temperature = 28 C, humidity = 70.3 %, ph = 7.0, dan rainfall = 150 mm tanaman yang cocok di adalah jute atau daun rami.
-
+Dengan kondisi N = 83, P = 45, K = 60, temperature = 28 C, humidity = 70.3 %, ph = 7.0, dan rainfall = 150 mm tanaman yang cocok di adalah jute atau daun rami. Dengan menggunakan Hyperparameter Tuning untuk mencari nilai k pada algoritma k-nearest neighbor dan beberapa metrik lain dapat meningkatkan performa model dan dapat memprediksi tanaman sesuai dengan karakteristiknya.
 
 ## References
 
+[[1](https://www.researchgate.net/profile/Hem-Joshi-3/post/what_are_the_different_techniques_used_in_fertilizers_crop_recommendation_system/attachment/5f08a4a43f16f90001231756/AS%3A911802045038593%401594401956134/download/ijcsit2016070247.pdf)] S. Mansi , E. Kimaya , G. Sonali , P. Sanket and M. Shubhada , "Crop Recommendation and Fertilizer Purchase System," (IJCSIT) International Journal of Computer Science and Information Technologies, vol. 7, no. 2, 2016. 
